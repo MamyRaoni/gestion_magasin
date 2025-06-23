@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+<div class="card-body">
+    <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 max-w-sm ml-96 mt-10">
+        {{ form_errors(registrationForm) }}
+        <legend class="fieldset-legend text-lg font-semibold mb-4">Isertion</legend>
+        {{ form_start(registrationForm) }}
+        <label class="label">Email</label>
+        {{ form_row(registrationForm.email, {label:false})}}
+
+        <label class="label">Name</label>
+        {{ form_row(registrationForm.name, {label:false})}}
+        
+        <label class="label">Password</label>
+        {{ form_row(registrationForm.plainPassword, {
+                label: false
+            }) }}
+        <label class="label">Remeber me </label>    
+        {{ form_row(registrationForm.agreeTerms, {label:false}) }}
+        <button type="submit" class="btn btn-neutral mt-4">Register</button>
+        {{ form_end(registrationForm) }}
+    </fieldset>
+</div>
+
+    
+{% endblock %}
+        

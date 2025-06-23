@@ -5,13 +5,69 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
         {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
         {% endblock %}
 
         {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
+            {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+    <header>
+        <div class="navbar bg-base-100 shadow-sm">
+    <div class="flex-1">
+      {% if app.user %}
+      <a class="btn btn-ghost text-xl" href="{{path('app_main')}}">daisyUI</a>
+      {% endif %}
+      {% if not app.user %}
+      <a class="btn btn-ghost text-xl" href="{{path('app_login')}}">daisyUI</a>
+      {% endif %}
+    </div>
+    {% if app.user %}
+    <div class="flex-none">
+      <div class="dropdown dropdown-end">
+        <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+          <div class="w-10 rounded-full">
+            <img
+              alt="Tailwind CSS Navbar component"
+              src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+          </div>
+        </div>
+        <ul
+          tabindex="0"
+          class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+          <li>
+            <a class="justify-between" href="{{path('app_register')}}">
+              Profile
+              <span class="badge">New</span>
+            </a>
+          </li>
+          <li><a>Settings</a></li>
+          <li><a href="{{path('app_logout')}}">Logout</a></li>
+        </ul>
+      </div>
+      {% endif %}
+      {% set route = app.request.get('_route') %}
+      {% if not app.user and route starts with 'app_login' %}
+        <div class="flex-none">
+            <a class="btn btn-ghost text-xs" href="{{path('app_register')}}">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-plus-icon lucide-user-plus"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+              Sing-Up
+            </a>
+        </div>
+      {% elseif not app.user and route starts with 'app_register' %}
+                <div class="flex-none">
+            <a class="btn btn-ghost text-xs" href="{{path('app_login')}}">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-plus-icon lucide-user-plus"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+              Sing-In
+            </a>
+        </div>
+      {% endif %}
+      
+     
+    </div>
+  </div>
+    </header>
+{% block body %}{% endblock %}
     </body>
 </html>
